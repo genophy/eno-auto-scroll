@@ -4,17 +4,22 @@
     "description": "自动循环滚动",
     "main": "dist/eno-auto-scroll.umd.js",
     "private": false,
-    "license": "MIT",
-    "author": "genophy",
     "keywords": [
         "vue",
         "autoscroll",
         "scroll"
     ],
+    "license": "MIT",
+    "author": "genophy",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/genophy/eno-auto-scroll"
+    },
+    "bugs": {
+        "url": "https://github.com/genophy/eno-auto-scroll/issues"
+    },
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint",
         "lib": "vue-cli-service build --target lib --name eno-auto-scroll --dest dist packages/index.js"
     },
     "dependencies": {
