@@ -2,6 +2,9 @@
 
 自动循环滚动
 
+## Plugin example
+![example.gif](example.gif)
+
 ## Plugin install
 ```
 npm install --save eno-auto-scroll
