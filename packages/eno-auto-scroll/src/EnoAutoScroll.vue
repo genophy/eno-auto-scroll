@@ -24,7 +24,7 @@
 <template>
     <div class="eno-auto-scroll" style="position : relative;overflow : hidden;">
         <div ref="enoAutoScroll" style="width:100%;height:100%;overflow: hidden;">
-            <div ref="enoAutoScrollContent" style="display : inline-block;">
+            <div ref="enoAutoScrollContent" style="display : block;width: 100%;">
                 <slot></slot>
             </div>
         </div>
@@ -87,14 +87,13 @@ export default {
             scrollScopeDuration: 0, // 滚动范围内，滚动结束所需要的时间px
             scrollOffsetCurrent: 0, // 当前应该滚动的高度，用于累加赋值px
             scrollSizeUnit100ms: 0, // 每100毫秒滚动的高度px
-            interval           : null, // 轮循
-            scopeAutoplay      : true
+            interval           : null // 轮循
         };
     },
     computed: {
         // 滚动的百分比
         scrollPerNum() {
-            const scrollPerNum = Math.floor((this.scrollOffsetCurrent + this.componentSize) / (this.contentSize + this.componentSize) * 100);
+            const scrollPerNum = Number((this.scrollOffsetCurrent + this.componentSize) / (this.contentSize + this.componentSize) * 100).toFixed();
             return scrollPerNum < 0 ? 0 : (scrollPerNum > 100 ? 100 : scrollPerNum);
         }
     },
@@ -208,19 +207,20 @@ export default {
          */
         startScroll() {
             const that = this;
+
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
+            if (!that.$refs.enoAutoScrollContent) {
+                return;
+            }
+
             // 只有初始化滚动条完毕 ，且当内容高度 大于 当前组件可视高度，才会自动滚动
             if (that.contentSize > that.componentSize) {
-                if (this.interval) {
-                    clearInterval(this.interval);
-                }
-                if (!that.$refs.enoAutoScrollContent) {
-                    return;
-                }
-
                 that.interval = setInterval(() => {
                     that.scrollOffsetCurrent = that.scrollOffsetCurrent + that.scrollSizeUnit100ms;
 
-                    // 若scrollOffsetCurrent长度超过总长度，则从0开始
+                    // 若scrollOffsetCurrent长度超过总长度，则从组件以下区域开始
                     if (that.scrollOffsetCurrent >= that.contentSize) {
                         that.scrollOffsetCurrent                         = -that.componentSize;
                         that.$refs.enoAutoScrollContent.style.visibility = 'hidden';
@@ -238,6 +238,8 @@ export default {
                     }
                     that.$refs.enoAutoScrollContent.style.transform = that.orientation === 'vertical' ? `translateY(${-that.scrollOffsetCurrent}px)` : `translateX(${-that.scrollOffsetCurrent}px)`;
                 }, that.animateDuration);
+            } else {
+                that.resetScroll();
             }
         },
         /**
@@ -264,10 +266,15 @@ export default {
         },
         /**
          * reset scroll offset
+         * @param isToTop 是否定位到顶部
          */
-        resetScroll() {
+        resetScroll(isToTop = true) {
             // 内容高度 大于 当前组件可视高度 ,且允许从底部滚动，才允许重置到底部
-            this.scrollOffsetCurrent                         = this.contentSize > this.componentSize && this.isScrollFromBottom ? -this.componentSize : 0;
+            if (isToTop) {
+                this.scrollOffsetCurrent = 0;
+            } else {
+                this.scrollOffsetCurrent = this.contentSize > this.componentSize && this.isScrollFromBottom ? -this.componentSize : 0;
+            }
             this.$refs.enoAutoScrollContent.style.visibility = 'hidden';
             this.$refs.enoAutoScrollContent.style.transition = 'all 0ms linear 0ms';
             this.$refs.enoAutoScrollContent.style.transform  = this.orientation === 'vertical' ? `translateY(${-this.scrollOffsetCurrent}px)` : `translateX(${-this.scrollOffsetCurrent}px)`;
@@ -301,7 +308,6 @@ export default {
                     that.scrollSizeUnit100ms = that.scrollScope / that.duration * that.animateDuration;
                     break;
             }
-            console.log(that.componentSize, '-> ', that.contentSize, ':', that.scrollSizeUnit100ms, '>', that.animateDuration);
         },
         /* _____________________________________________________________________________________ */
         /* _____________________________________________________________________________________ */
@@ -313,13 +319,6 @@ export default {
                 return true;
             }
             return false;
-        },
-        /**
-         * set autoplay
-         * @param autoplay
-         */
-        setAutoplay(autoplay) {
-            this.scopeAutoplay = autoplay;
         }
 
         /* _____________________________________________________________________________________ */
