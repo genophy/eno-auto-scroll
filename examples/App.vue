@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <EnoAutoScroll style="height: 100px;width: 200px;background-color: aquamarine;margin: auto;" @on-progress="progressNum=$event">
+        <EnoAutoScroll style="height: 100px;width: 200px;background-color: aquamarine;margin: auto;" scroll-scope="content" @on-progress="progressNum=$event">
             <div>
-                <div v-for="(item,idx) in list" :key="idx">{{item}}</div>
+                <div v-for="(item,idx) in list" :key="idx">{{idx + 1}}/{{list.length}}--{{item}}</div>
             </div>
         </EnoAutoScroll>
         {{progressNum}}%
@@ -16,12 +16,21 @@ export default {
     data() {
         return {
             list       : [],
-            progressNum: 0
+            progressNum: 0,
+            interval   : null
         };
     },
     created() {
-        this.list = new Array(50);
-        this.list.fill('abcdefg');
+        this.interval = setInterval(() => {
+            this.list = new Array(Math.floor(Math.random() * 50 + 20));
+            this.list.fill('abcdefg');
+        }, 30000);
+    },
+    beforeDestroy() {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+        }
     }
 };
 </script>
