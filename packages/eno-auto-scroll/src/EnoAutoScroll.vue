@@ -19,6 +19,10 @@
         - event
             @on-progress                Number             进度改变值
         - method
+            startScroll()               重新计算内容高度，并重新开始滚动
+            stopScroll()                停止滚动，并且重置滚动位置
+            keepScroll()                继续滚动
+            pauseScroll()               暂停滚动
 -->
 
 <template>
@@ -105,7 +109,7 @@ export default {
     },
     updated() {
         if (this.$_checkForSlotContentLengthChange() && this.$refs.enoAutoScrollContent) {
-            this.beginScroll();
+            this.startScroll();
         }
     },
 
@@ -115,7 +119,7 @@ export default {
     mounted() {
         this.initScrollListener();
         if (this.$_checkForSlotContentLengthChange() && this.$refs.enoAutoScroll && this.$refs.enoAutoScrollContent) {
-            this.beginScroll();
+            this.startScroll();
         }
     },
     methods: {
@@ -159,7 +163,7 @@ export default {
                     that.$refs.enoAutoScroll.addEventListener('mouseout', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        that.startScroll();
+                        that.keepScroll();
                     });
 
                     if (that.isMousewheelControl) {
@@ -182,7 +186,7 @@ export default {
                         if (document.visibilityState === 'hidden') {
                             this.pauseScroll();
                         } else {
-                            this.startScroll();
+                            this.keepScroll();
                         }
                     }
                 });
@@ -196,16 +200,28 @@ export default {
          *  3. reset scroll position
          *  4. start scroll
          */
-        beginScroll() {
+        startScroll() {
             this.pauseScroll();
-            this.calculateSize();
+            this.$_calculateSize();
             this.resetScroll();
-            this.startScroll();
+            this.keepScroll();
+        },
+
+        /**
+         * stop scroll
+         *  1. pause scroll
+         *  2. reset scroll
+         */
+        stopScroll() {
+            // 暂停滚动
+            this.pauseScroll();
+            // 重置滚动属性
+            this.resetScroll();
         },
         /**
          * start scroll
          */
-        startScroll() {
+        keepScroll() {
             const that = this;
 
             if (this.interval) {
@@ -252,18 +268,6 @@ export default {
                 this.interval = null;
             }
         },
-
-        /**
-         * stop scroll
-         *  1. pause scroll
-         *  2. reset scroll
-         */
-        stopScroll() {
-            // 暂停滚动
-            this.pauseScroll();
-            // 重置滚动属性
-            this.resetScroll();
-        },
         /**
          * reset scroll offset
          * @param isToTop 是否定位到顶部
@@ -281,10 +285,26 @@ export default {
             this.$refs.enoAutoScrollContent.style.visibility = 'visible';
         },
 
+        /* _____________________________________________________________________________________ */
+        /* _____________________________________________________________________________________ */
+        /* _____________________________________________________________________________________ */
+        /* _____________________ [ private: *,query,fetch,action,init ] ________________________ */
+
+        /**
+         * 检查slot内容高度是否改变
+         * @returns {boolean}
+         */
+        $_checkForSlotContentLengthChange() {
+            if (this.$slots.default && this.$slots.default[0] && this.$slots.default[0].elm && this.$slots.default[0].elm.offsetHeight !== this.lengthPrev) {
+                this.lengthPrev = this.$slots.default[0].elm.offsetHeight;
+                return true;
+            }
+            return false;
+        },
         /**
          * 计算尺寸
          */
-        calculateSize() {
+        $_calculateSize() {
             const that = this;
             if (!that.$refs.enoAutoScrollContent) {
                 return;
@@ -308,19 +328,7 @@ export default {
                     that.scrollSizeUnit100ms = that.scrollScope / that.duration * that.animateDuration;
                     break;
             }
-        },
-        /* _____________________________________________________________________________________ */
-        /* _____________________________________________________________________________________ */
-        /* _____________________________________________________________________________________ */
-        /* _____________________ [ private: *,query,fetch,action,init ] ________________________ */
-        $_checkForSlotContentLengthChange() {
-            if (this.$slots.default && this.$slots.default[0] && this.$slots.default[0].children.length !== this.lengthPrev) {
-                this.lengthPrev = this.$slots.default[0].children.length;
-                return true;
-            }
-            return false;
         }
-
         /* _____________________________________________________________________________________ */
         /* _____________________________________________________________________________________ */
         /* _____________________________________________________________________________________ */

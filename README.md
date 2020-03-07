@@ -33,7 +33,7 @@ Vue.use(EnoAutoScroll);
 ### Component Props
 
 | name | type | default | describe |
-| --- | --- |--- | --- |
+| --- | --- | --- | --- |
 | duration | Number | 3000 | 经过scrollScope范围，过程时间(ms) |
 | scroll-scope | Number, String | 'component' | 在duration时间内滚动的范围。('component':组件可视区域 , 'content':整个列表 , Number:指定(px)) |
 | is-mouse-stop | Boolean | true | 鼠标划过是否暂停 |
@@ -46,5 +46,18 @@ Vue.use(EnoAutoScroll);
 
 ### Component Event
 | name | type | describe |
-| --- | --- |--- |
+| --- | --- | --- |
 | on-progress | Number | 进度改变值(0 - 100) |
+
+
+### Component Ref function
+```vue]
+<EnoAutoScroll ref="enoAutoScroll" style="height: 100px;">
+</EnoAutoScroll>
+```
+| name | params | default | describe |
+| --- | --- | --- | --- |
+| startScroll | - | - | 重新计算内容高度，并重新开始滚动 |
+| stopScroll | - | - | 停止滚动，并且重置滚动位置 |
+| keepScroll | - | - | 继续滚动 |
+| pauseScroll | - | - | 暂停滚动 |
