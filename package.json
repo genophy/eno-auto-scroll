@@ -1,6 +1,6 @@
 {
     "name": "eno-auto-scroll",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "description": "自动循环滚动",
     "main": "dist/eno-auto-scroll.umd.js",
     "private": false,
