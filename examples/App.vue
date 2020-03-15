@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="demo-scroll">
-            <EnoAutoScroll scroll-scope="content" @on-progress="progressNum=$event">
+            <EnoAutoScroll @on-progress="progressNum=$event" @on-scroll-end="scrollCount ++">
                 <div style="padding:10px 0;">
                     <div v-for="(item,idx) in list" :key="idx">{{idx + 1}}/{{list.length}}--{{item}}</div>
                 </div>
@@ -9,33 +9,39 @@
         </div>
 
         <span class="per-num">{{progressNum}}%</span>
+        <span class="per-num">{{scrollCount}}times</span>
     </div>
 </template>
 
 <script>
 
 export default {
-    name: 'App',
+    name   : 'App',
     data() {
         return {
             list       : [],
             progressNum: 0,
+            scrollCount: 0,
             interval   : null
         };
     },
     created() {
-        this.list = new Array(Math.floor(Math.random() * 3 + 2));
+        this.list = new Array(Math.floor(Math.random() * 10 + 20));
         this.list.fill('abcdefg');
         this.interval = setInterval(() => {
-            this.list = new Array(Math.floor(Math.random() * 50 + 20));
+            this.list = new Array(Math.floor(Math.random() * 10 + 20));
             this.list.fill('abcdefg');
-            console.log('reset data');
-        }, 5000);
+        }, 10000);
     },
     beforeDestroy() {
         if (this.interval) {
             clearInterval(this.interval);
             this.interval = null;
+        }
+    },
+    methods: {
+        handleScrollEnd() {
+            console.log('scroll end');
         }
     }
 };
@@ -51,6 +57,13 @@ export default {
     margin-top              : 60px;
 }
 
+.demo-scroll {
+    height           : 200px;
+    width            : 200px;
+    background-color : aquamarine;
+    margin           : auto;
+}
+
 .per-num {
     display     : block;
     color       : #a6cb61;
@@ -59,10 +72,4 @@ export default {
     padding     : 20px;
 }
 
-.demo-scroll {
-    height           : 400px;
-    width            : 200px;
-    background-color : aquamarine;
-    margin           : auto;
-}
 </style>

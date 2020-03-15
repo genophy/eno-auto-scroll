@@ -15,7 +15,8 @@
             :is-mousewheel-control      Boolean             true                是否支持鼠标滑轮控制，必须开启[:isMouseStop]，这个操作的设置才有效
             :is-scroll-from-bottom      Boolean             true                是否从底部开始滚动
         - event
-            @on-progress                Number             进度改变值
+            @on-progress                Number              进度改变值
+            @on-scroll-end                                  滚动到了底部，需要重新开始滚动，即可触发
         - method
             startScroll()               重新计算内容高度，并重新开始滚动
             stopScroll()                停止滚动，并且重置滚动位置
@@ -40,7 +41,7 @@ export default {
         // 经过scrollScope范围，过程时间(ms)
         duration           : {
             type   : Number,
-            default: 30000
+            default: 3000
         },
         // 在duration时间内滚动的范围。('component' | 'content' | Number) component，表示该组件可视高度。content，表示整个列表。否则指定高度数字(px)
         scrollScope        : {
@@ -106,7 +107,7 @@ export default {
     },
     mounted() {
         this.initScrollListener();
-        if (this.$_checkForSlotContentLengthChange() && this.$refs.enoAutoScroll && this.$refs.enoAutoScrollContent) {
+        if (this.$_checkForSlotContentLengthChange() && this.$refs.enoAutoScrollContent) {
             this.startScroll();
         }
     },
@@ -229,14 +230,11 @@ export default {
                         that.scrollOffsetCurrent                         = -that.componentSize;
                         that.$refs.enoAutoScrollContent.style.visibility = 'hidden';
                         that.isScrolling                                 = false;
+                        that.$emit('on-scroll-end');
                     } else {
                         that.$refs.enoAutoScrollContent.style.visibility = 'visible';
                         //  若允许后台运行，且已经在后台，则设置动画间隔时间为0ms
-                        if (this.isDaemon && document.visibilityState === 'hidden') {
-                            this.isScrolling = false;
-                        } else {
-                            this.isScrolling = true;
-                        }
+                        this.isScrolling                                 = !(this.isDaemon && document.visibilityState === 'hidden');
                     }
                     that.$refs.enoAutoScrollContent.style.transform = `translateY(${-that.scrollOffsetCurrent}px)`;
                 }, that.animateDuration);
