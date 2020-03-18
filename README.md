@@ -40,7 +40,6 @@ Vue.use(EnoAutoScroll);
 | is-daemon | Boolean | false | 是否以守护程序方式继续后台运行。当页面隐藏的时候，不会滚动 |
 | is-mousewheel-control | Boolean | true | 是否支持鼠标滑轮控制，必须开启[:isMouseStop]，这个操作的设置才有效 |
 | is-scroll-from-bottom | Boolean | true | 是否从末尾开始滚动 |
-| is-scroll-from-bottom | Boolean | true | 是否从末尾开始滚动 |
 
 ### Component Event
 | name | type | describe |
