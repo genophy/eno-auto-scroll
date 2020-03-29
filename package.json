@@ -2,6 +2,7 @@
     "name": "eno-auto-scroll",
     "version": "0.1.11",
     "description": "自动循环滚动",
+    "publishConfig": { "registry": "https://npm.pkg.github.com/" },
     "main": "dist/eno-auto-scroll.umd.js",
     "private": false,
     "keywords": [
