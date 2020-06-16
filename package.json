@@ -1,44 +1,47 @@
 {
-    "name": "eno-auto-scroll",
-    "version": "0.1.11",
-    "description": "自动循环滚动",
-    "publishConfig": { "registry": "https://npm.pkg.github.com/" },
-    "main": "dist/eno-auto-scroll.umd.js",
-    "private": false,
-    "keywords": [
-        "vue",
-        "autoscroll",
-        "scroll"
-    ],
-    "license": "MIT",
-    "author": "genophy",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/genophy/eno-auto-scroll"
-    },
-    "bugs": {
-        "url": "https://github.com/genophy/eno-auto-scroll/issues"
-    },
-    "scripts": {
-        "serve": "vue-cli-service serve",
-        "lib": "vue-cli-service build --target lib --name eno-auto-scroll --dest dist packages/index.js"
-    },
-    "dependencies": {
-        "core-js": "^3.6.4",
-        "vue": "^2.6.11"
-    },
-    "devDependencies": {
-        "@vue/cli-plugin-babel": "~4.2.0",
-        "@vue/cli-plugin-eslint": "~4.2.0",
-        "@vue/cli-service": "~4.2.0",
-        "@vue/eslint-config-standard": "^5.1.0",
-        "babel-eslint": "^10.0.3",
-        "eslint": "^6.7.2",
-        "eslint-plugin-import": "^2.20.1",
-        "eslint-plugin-node": "^11.0.0",
-        "eslint-plugin-promise": "^4.2.1",
-        "eslint-plugin-standard": "^4.0.0",
-        "eslint-plugin-vue": "^6.1.2",
-        "vue-template-compiler": "^2.6.11"
-    }
+  "name": "eno-auto-scroll",
+  "version": "0.1.12",
+  "description": "自动循环滚动",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "main": "dist/eno-auto-scroll.umd.js",
+  "private": false,
+  "keywords": [
+    "vue",
+    "autoscroll",
+    "scroll"
+  ],
+  "license": "MIT",
+  "author": "genophy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/genophy/eno-auto-scroll"
+  },
+  "bugs": {
+    "url": "https://github.com/genophy/eno-auto-scroll/issues"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "lib": "vue-cli-service build --target lib --name eno-auto-scroll --dest dist packages/index.js"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-plugin-eslint": "~4.2.0",
+    "@vue/cli-service": "~4.2.0",
+    "@vue/eslint-config-standard": "^5.1.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^6.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "minimist": ">=1.2.3"
+  }
 }

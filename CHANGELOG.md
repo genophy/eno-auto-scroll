@@ -1,3 +1,9 @@
+### 0.1.12
+>2020-06-16
+
+#### props remove
+- remove event before destroy
+
 ### 0.1.11
 >2020-03-15
 

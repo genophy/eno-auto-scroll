@@ -7,7 +7,7 @@
 import EnoAutoScroll from './src/EnoAutoScroll';
 
 EnoAutoScroll.install = function (Vue) {
-    Vue.component(EnoAutoScroll.name, EnoAutoScroll);
+  Vue.component(EnoAutoScroll.name, EnoAutoScroll);
 };
 
 export default EnoAutoScroll;

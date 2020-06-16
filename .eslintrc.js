@@ -17,8 +17,8 @@ module.exports = {
     'no-multi-spaces'            : 0,
     // 允许关键字后存在空格
     'key-spacing'                : 0,
-    // 缩进4个空格
-    'indent'                     : ['warn', 4, { 'SwitchCase': 1 }],
+    // 缩进4个空格(关闭)
+    'indent'                     : 'off',
     // 方法参数之前有空格，关闭
     'space-before-function-paren': 0,
     'object-curly-spacing'       : 0,
@@ -143,4 +143,4 @@ module.exports = {
       }],
     'vue/no-parsing-error'                 : 0
   }
-}
+};
