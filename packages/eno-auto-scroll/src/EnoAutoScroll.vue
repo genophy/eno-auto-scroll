@@ -97,6 +97,7 @@ export default {
 
     },
     updated() {
+        this.initScrollListener();
         if (this.$_checkForSlotContentLengthChange() && this.$refs.enoAutoScrollContent) {
             this.startScroll();
         }
@@ -104,12 +105,6 @@ export default {
 
     beforeDestroy() {
         this.pauseScroll();
-    },
-    mounted() {
-        this.initScrollListener();
-        if (this.$_checkForSlotContentLengthChange() && this.$refs.enoAutoScrollContent) {
-            this.startScroll();
-        }
     },
     methods: {
         /* _____________________________________________________________________________________ */
