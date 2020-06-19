@@ -6,11 +6,12 @@
     </ul>
 
     <div v-if="isVisibility" class="demo-scroll">
-      <EnoAutoScroll @on-progress="progressNum=$event" @on-scroll-end="scrollCount ++">
+      <EnoAutoScroll :duration="1000" @on-progress="progressNum=$event" @on-scroll-end="scrollCount ++">
         <div v-for="(item,idx) in list" :key="idx">{{idx + 1}}/{{list.length}}--{{item}}</div>
       </EnoAutoScroll>
     </div>
 
+    <button @click="handleGenerateList">重新生成列表</button>
     <button @click="list = []">清空列表</button>
 
     <span class="per-num">{{progressNum}}%</span>
@@ -37,7 +38,7 @@ export default {
     this.list     = utils.randomList();
     this.interval = setInterval(() => {
       this.list = utils.randomList();
-    }, 10000);
+    }, 30000);
   },
   beforeDestroy() {
     // 清空interval
@@ -47,6 +48,9 @@ export default {
     }
   },
   methods: {
+    handleGenerateList() {
+      this.list = utils.randomList();
+    },
     /**
      * 滚动结束
      */

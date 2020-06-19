@@ -315,7 +315,7 @@ export default {
     $_checkForSlotContentLengthChange() {
       let height = 0;
       if (this.$slots.default && this.$slots.default[0] && this.$slots.default[0].elm && this.$slots.default[0].elm.offsetHeight) {
-        height = this.$slots.default[0].elm.offsetHeight;
+        height = Array.from(this.$slots.default).map(item => item.elm.offsetHeight).reduce((t, h) => t + h);
       }
       if (height !== this.lengthPrev) {
         this.lengthPrev = height;

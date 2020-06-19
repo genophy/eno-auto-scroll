@@ -11,7 +11,7 @@ export default {
    * @returns {string[]}
    */
   randomList() {
-    const listTotal = Math.floor(Math.random() * 10 + 20);
+    const listTotal = Math.floor(Math.random() * 50 + 20);
     const list      = new Array(listTotal);
     list.fill('');
     return list.map(() => {
